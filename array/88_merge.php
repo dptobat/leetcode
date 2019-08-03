@@ -1,4 +1,5 @@
 <?php
+
 class Solution {
 
     /**
@@ -24,11 +25,46 @@ class Solution {
     function merge(&$nums1, $m, $nums2, $n) {
         //判断需要移动的位移;
         //$i表示$nums1的下标索引;$j表示的$nums2的下标索引;
-        $i=$j=0;
-        while($i<$m&&$j<$n){
-            $nums1>$nums2?$i++:$j++;
-
+        //倒着进行比较;
+        $end = $m-- + $n-- - 1;
+        while ($m >= 0 && $n >= 0) {
+            $nums1[$end--]=$nums1[$m]>$nums2[$n]?$nums1[$m--]:$nums2[$n--];
         }
-
+        //还需要将剩下的数据批量的赋值过去;
+        while($n>=0){
+            $nums1[$end--]=$nums2[$n--];
+        }
     }
+//下面是自己写的,没有别人的简洁;
+/*    function merge(&$nums1, $m, $nums2, $n) {
+        if ($m == 0) $nums1 = $nums2;
+        $end = $m + $n - 1;
+        $i = $m - 1;
+        $j = $n - 1;
+        while ($i >= 0 && $j >= 0) {
+            if ($nums1[$i] > $nums2[$j]) {
+                $nums1[$end] = $nums1[$i];
+                $i--;
+            } else {
+                $nums1[$end] = $nums2[$j];
+                $j--;
+            }
+            $end--;
+        }
+        //还需要将剩下的数据批量的赋值过去;
+        while($j>=0){
+            $nums1[$j]=$nums2[$j];
+            $j--;
+        }
+    }
+*/
+
 }
+
+$nums1 = [1,2,3,0,0,0];
+$m = 3;
+$nums2 = [2,5,6];
+$n = 3;
+
+(new Solution())->merge($nums1, $m, $nums2, $n);
+var_dump($nums1);
