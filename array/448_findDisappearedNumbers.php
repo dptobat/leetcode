@@ -21,23 +21,21 @@ class Solution {
     [5,6]*/
 
     function findDisappearedNumbers($nums) {
-        //定义次数,定义最大次数;
-        $times=$max_times=0;
         $nums_count=count($nums);
         for($i=0;$i<$nums_count;$i++){
-            if($nums[$i]==1){
-                $times++;
-            }else if($times!=0){
-                $max_times=max($max_times,$times);
-                //重新计数;
-                $times=0;
+            //求绝对值;
+            $index=abs($nums[$i]);
+            $nums[$index-1]=min($nums[$index-1],-$nums[$index-1]);
+        }
+        //这样遍历出那些大于零的;
+        $remain_array=[];
+        for($i=0;$i<$nums_count;$i++){
+            if($nums[$i]>0){
+                $remain_array[]=$i+1;
             }
         }
-        $max_times=max($max_times,$times);
-        return $max_times;
+        return $remain_array;
     }
 }
-
-
-$nums=[1,1,0,1,1,1];
-var_dump((new Solution())->findDisappearedNumbers($nums));
+$nums=[4,3,2,7,8,2,3,1];
+var_dump( (new Solution())->findDisappearedNumbers($nums));

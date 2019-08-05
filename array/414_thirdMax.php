@@ -32,6 +32,7 @@ class Solution {
     存在两个值为2的数，它们都排第二*/
     //和求快排的差不多;
     function thirdMax($nums) {
+        //就是将小于的放在一边，大于的放在一边;
 
     }
 }
