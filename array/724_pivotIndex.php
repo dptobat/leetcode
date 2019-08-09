@@ -29,16 +29,21 @@ class Solution {
     数组中不存在满足此条件的中心索引。*/
 
     function pivotIndex($nums) {
-        $i=1;
-        $j=count($nums)-2;
-        $last_sum=$nums[0];
-        $next_sum=$nums[1];
-        while($i<=$j){
-
-
-            $last_sum+=$nums[$i];
-            $next_sum+=
+        $sum=0;
+        $nums_count = count($nums);
+        for($i=0;$i<$nums_count;$i++){
+            $sum+=$nums[$i];
         }
-
+        $i_to_sum=0;
+        for($i=0;$i<$nums_count;$i++){
+            if($i_to_sum==$sum-$i_to_sum-$nums[$i]){
+                return $i;
+            }
+            $i_to_sum+=$nums[$i];
+        }
+        return -1;
     }
 }
+
+$nums =  [1, 7, 3, 6, 5, 6];
+var_dump((new Solution())->pivotIndex($nums));
