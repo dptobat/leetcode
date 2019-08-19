@@ -28,6 +28,11 @@ class Solution {
         for($i=0;$i<$nums_count-1;$i++){
             if($nums[$i]>$nums[$i+1]){
                 $count++;
+                //这个时候还需要比较$nums[$i+1]和$nums[$i-1]
+                //判断需要改变的是哪个元素;$i还是$i+1;
+                if(($i!=0&&$nums[$i-1]>$nums[$i+1])&&($i+2<$nums_count&&$nums[$i]>$nums[$i+2])){
+                    $count++;
+                }
             }
             if($count>1){
                 return false;
@@ -36,5 +41,6 @@ class Solution {
         return true;
     }
 }
-$nums=[3,4,2,3];
+$nums=[4,2,3];
+//[2,3,3,2,4]
 var_dump((new Solution())->checkPossibility($nums));

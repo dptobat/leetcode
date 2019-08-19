@@ -32,6 +32,61 @@ class Solution {
     所有输入的整数的范围在 [-1e7, 1e7]。*/
 
     function findPairs($nums, $k) {
+        //先排序
+        $nums_count=count($nums);
+        sort($nums);
+        $record=[];
+        //定义$i,$j两个指针，依次向前；
+        $i=0;$j=1;
+        $count=0;
 
+        while($j<$nums_count){
+            if($nums[$j]-$nums[$i]<$k){
+                $j++;
+            }elseif($nums[$j]-$nums[$i]>$k){
+                    $i++;
+                    if($i==$j){
+                        $j++;
+                    }
+            }else{
+                if(!in_array($nums[$i],$record)){
+                    $count++;
+                    $record[]=$nums[$i];
+                }
+                //记录加入的$i;
+                $j++;$i++;
+            }
+        }
+        return $count;
     }
+
+    function quickSort(&$num, $start, $end) {
+        if ($start >= $end) return;
+        $partition = $this->partition($num, $start, $end);
+        $this->quickSort($num, $start, $partition - 1);
+        $this->quickSort($num, $partition + 1, $end);
+    }
+
+    function partition(&$num, $start, $end) {
+        $base = $num[$start];
+        $start_index = $start;
+        while ($start < $end) {
+            while ($num[$end] > $base && $start < $end) {
+                $end--;
+            }
+            while ($num[$start] <= $base&&$start<$end) {
+                $start++;
+            }
+            //交换$start和$end的值;
+            [$num[$start],$num[$end]]=[$num[$end],$num[$start]];
+        }
+        //交换base和$start_index的值;
+        [$num[$start_index],$num[$start]]=[$num[$start],$num[$start_index]];
+        return $start;
+    }
+
 }
+
+
+$nums=[3, 1, 4, 1, 5]; $k = 2;
+var_dump((new Solution())->findPairs($nums,$k));
