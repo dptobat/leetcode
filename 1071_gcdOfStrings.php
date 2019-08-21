@@ -27,6 +27,29 @@ class Solution {
 //输出：""
 
     function gcdOfStrings($str1, $str2) {
-
+        //其实就是求公约数;
+        $divisor1=strlen($str1);
+        $divisor2=strlen($str2);
+        while($divisor=$divisor1%$divisor2){
+            [$divisor1,$divisor2]=[$divisor2,$divisor];
+        }
+        //截取$divisor2;
+        $gcd='';
+        $str1.=$str2;
+        $str1_length=strlen($str1);
+        for($i=0;$i<$str1_length;$i++){
+            $gcd.=$str1[$i];
+            if(($i+1)%$divisor2==0){
+                isset($common) or $common=$gcd;
+                if($common!==$gcd){
+                    return "";
+                }
+                $gcd='';
+            }
+        }
+        return $common;
     }
 }
+
+$str1 = "LEET"; $str2 = "CODE";
+var_dump((new Solution())->gcdOfStrings($str1,$str2));
